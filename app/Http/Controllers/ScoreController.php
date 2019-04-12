@@ -27,7 +27,7 @@ class ScoreController extends Controller
             $player = Player::where('id', $playerId)->firstOrFail();
         }
 
-        $corporations = Corporation::where('id', '!=', 0)->get();
+        $corporations = Corporation::where('id', '!=', 1)->get();
 
         return view('scores.create', compact('game', 'player', 'corporations'));
     }
@@ -65,7 +65,7 @@ class ScoreController extends Controller
 
     public function edit(Game $game, Score $score)
     {
-        $corporations = Corporation::where('id', '!=', 0)->get();
+        $corporations = Corporation::where('id', '!=', 1)->get();
 
         return view('scores.edit', compact('game', 'score', 'corporations'));
     }

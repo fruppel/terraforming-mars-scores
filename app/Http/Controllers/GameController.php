@@ -69,7 +69,10 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
-        $scores = Score::where('game_id', '=', $game->id)->orderBy('result', 'DESC')->get();
+        $scores = Score::where('game_id', '=', $game->id)
+            ->orderByDesc('result')
+            ->orderByDesc('megacredits')
+            ->get();
 
         $players = Player::whereNotIn('id', $scores->pluck('player_id'))
             ->orderBy('display_name')
@@ -123,14 +126,20 @@ class GameController extends Controller
 
         foreach ($game->scores as $score) {
             /** @var Score $score */
-            $result = $score->tr + $score->awards + $score->milestones;
+            $result = $score->tr + $score->awards + $score->milestones + $score->gameboard + $score->map + $score->cards;
             $score->update([
                 'result' => $result,
             ]);
 
-            if (!$winner || $result > $winner->result) {
+            if (!$winner || $result >= $winner->result) {
+
+                if ($winner && $result == $winner->result && $score->megacredits < $winner->megacredits) {
+                    continue;
+                }
+
                 $winner = $score;
             }
+
         }
 
         $game->update([

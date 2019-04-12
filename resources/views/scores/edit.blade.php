@@ -13,6 +13,7 @@
                 <label for="corporation_id" class="col-sm-2 col-form-label">Konzern</label>
                 <div class="col-sm-10">
                     <select id="corporation_id" name="corporation_id" class="form-control">
+                        <option value="0" {{ (int) $score->corporation_id === 0 ? 'selected' : '' }}>Anfänger-Konzern</option>
                         @foreach ($corporations as $corporation)
                             <option value="{{ $corporation->id }}" {{ (int) $score->corporation_id === $corporation->id ? 'selected' : '' }}>{{ $corporation->name }}</option>
                         @endforeach

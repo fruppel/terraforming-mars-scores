@@ -21,6 +21,10 @@
             <input type="checkbox" name="corporate_area" id="corporate_area" class="custom-control-input" {{ $game->corporate_area ? 'checked' : '' }}>
             <label class="custom-control-label" for="corporate_area">Zeitalter der Konzerne</label>
         </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" name="corporate_mini_extension" id="corporate_mini_extension" class="custom-control-input" {{ $game->corporate_mini_extension ? 'checked' : '' }}>
+            <label class="custom-control-label" for="corporate_mini_extension">Konzerne Mini-Erweiterung</label>
+        </div>
     </div>
 </div>
 <div class="form-group row mt-4">

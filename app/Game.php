@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $user_id
  * @property string $date
  * @property bool $corporate_area
+ * @property bool $corporate_mini_extension
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read mixed $german_date
@@ -29,10 +30,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Game extends Model
 {
-    protected $fillable = ['user_id', 'date', 'map_id', 'corporate_area', 'winner_player_id'];
+    protected $fillable = ['user_id', 'date', 'map_id', 'corporate_area', 'corporate_mini_extension', 'winner_player_id'];
 
     protected $casts = [
         'corporate_area' => 'boolean',
+        'corporate_mini_extension' => 'boolean',
         'winner_player_id' => 'integer',
     ];
 

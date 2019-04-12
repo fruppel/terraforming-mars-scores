@@ -19,6 +19,7 @@ class CreateGamesTable extends Migration
             $table->dateTime('date');
             $table->integer('map_id');
             $table->boolean('corporate_area');
+            $table->boolean('corporate_mini_extension');
             $table->integer('winner_player_id')->default(0);
             $table->timestamps();
         });

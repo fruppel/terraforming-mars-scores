@@ -56,6 +56,7 @@ class GameController extends Controller
             'date' => $request->get('date'),
             'map_id' => $request->get('map_id'),
             'corporate_area' => !!$request->get('corporate_area'),
+            'corporate_mini_extension' => !!$request->get('corporate_mini_extension'),
         ]);
 
         return redirect(route('games.show', compact('game')));

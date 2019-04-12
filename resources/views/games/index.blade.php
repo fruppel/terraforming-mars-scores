@@ -21,6 +21,7 @@
                 <th class="border-top-0">Datum</th>
                 <th class="border-top-0">Karte</th>
                 <th class="border-top-0 text-center">Zeitalter der Konzerne</th>
+                <th class="border-top-0 text-center">Konzerne Mini-Erweiterung</th>
                 <th class="border-top-0 text-center">Anzahl Spieler</th>
                 <th class="border-top-0 text-right">Aktionen</th>
             </tr>
@@ -32,6 +33,13 @@
                     <td>{{ $game->map->name }}</td>
                     <td class="text-center">
                         @if($game->corporate_area)
+                            <i class="oi oi-circle-check text-success"></i>
+                        @else
+                            <i class="oi oi-circle-x text-danger"></i>
+                        @endif
+                    </td>
+                    <td class="text-center">
+                        @if($game->corporate_mini_extension)
                             <i class="oi oi-circle-check text-success"></i>
                         @else
                             <i class="oi oi-circle-x text-danger"></i>

@@ -31,7 +31,7 @@
                 <div class="col-sm-10">
                     <select id="corporation_id" name="corporation_id" class="form-control">
                         <option disabled selected>Bitte wählen</option>
-                        <option value="0">Anfänger-Konzern</option>
+                        <option value="1">Anfänger-Konzern</option>
                         @foreach ($corporations as $corporation)
                             <option value="{{ $corporation->id }}">{{ $corporation->name }}</option>
                         @endforeach

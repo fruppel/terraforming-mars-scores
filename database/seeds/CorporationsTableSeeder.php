@@ -28,7 +28,7 @@ class CorporationsTableSeeder extends Seeder
         \App\Corporation::query()->delete();
 
         factory(App\Corporation::class)->create([
-            'id' => 0,
+            'id' => 1,
             'name' => 'Anfänger-Konzern',
         ]);
 

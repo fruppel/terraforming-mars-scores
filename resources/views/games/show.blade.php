@@ -53,9 +53,7 @@
                 </form>
             </div>
             <div class="col-sm-4 ml-sm-auto mt-3 text-right">
-                <a href="{{ route('games.calculate', compact('game')) }}" class="btn btn-block btn-outline-success">
-                    Berechnen
-                </a>
+                <calculate-button href="{{ route('games.calculate', compact('game')) }}">Berechnen</calculate-button>
             </div>
         </div>
 

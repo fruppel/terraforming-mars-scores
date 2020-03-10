@@ -121,7 +121,7 @@ class GameController extends Controller
         //
     }
 
-    public function calculate(Game $game)
+    public function calculate(Request $request, Game $game)
     {
         $winner = null;
 
@@ -146,6 +146,10 @@ class GameController extends Controller
         $game->update([
             'winner_player_id' => $winner->player->id,
         ]);
+
+        if ($request->wantsJson()) {
+            return response($winner->player, 200);
+        }
 
         return back();
     }

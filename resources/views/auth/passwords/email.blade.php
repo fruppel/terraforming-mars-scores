@@ -1,47 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+    @component('components.hero')
+        <form method="POST" action="{{ route('password.email') }}" class="box">
+            @csrf
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+            @if (session('status'))
+                <p class="help is-success">{{ session('status') }}</p>
+            @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+            <div class="field">
+                <label for="email" class="label is-hidden">E-Mail</label>
+                <div class="control has-icons-left">
+                    <input type="email" name="email" value="{{ old('email') }}" class="input @error('email') is-danger @enderror" placeholder="E-Mail-Adresse" required autofocus>
+                    <span class="icon is-small is-left">
+                        <span class="oi" data-glyph="envelope-closed"></span>
+                    </span>
                 </div>
+                @component('components.error_field', ['fieldName' => 'email']) @endcomponent
             </div>
-        </div>
-    </div>
-</div>
+
+                <div class="field">
+                    <button type="submit" class="button is-primary is-fullwidth">
+                        Passwort zurücksetzen
+                    </button>
+                </div>
+        </form>
+    @endcomponent
 @endsection

@@ -92,6 +92,8 @@ class GameController extends Controller
     {
         $maps = Map::all();
 
+        $game->date = Carbon::parse($game->date)->toDateTimeLocalString();
+
         return view('games.edit', compact('game', 'maps'));
     }
 
@@ -104,9 +106,14 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        $this->validate($request, [
+        $data = $this->validate($request, [
             'date' => 'required|date',
+            'map_id' => 'required',
         ]);
+
+        $game->fill($data)->save();
+
+        return redirect(route('games.index'));
 
     }
 
@@ -124,31 +131,35 @@ class GameController extends Controller
     public function calculate(Request $request, Game $game)
     {
         $winner = null;
+        $rankings = [];
 
         foreach ($game->scores as $score) {
             /** @var Score $score */
             $result = $score->tr + $score->awards + $score->milestones + $score->gameboard + $score->map + $score->cards;
-            $score->update([
-                'result' => $result,
-            ]);
 
-            if (!$winner || $result >= $winner->result) {
+            $score->result = $result;
+            $score->save();
 
-                if ($winner && $result == $winner->result && $score->megacredits < $winner->megacredits) {
-                    continue;
-                }
-
-                $winner = $score;
-            }
+            $rankings[] = $score;
 
         }
 
+        usort($rankings, function(Score $a, Score $b) {
+
+            if ($a->result + $a->megacredits > $b->result + $b->megacredits) {
+                return -1;
+            }
+
+            return 1;
+
+        });
+
         $game->update([
-            'winner_player_id' => $winner->player->id,
+            'winner_player_id' => $rankings[0]->player->id,
         ]);
 
         if ($request->wantsJson()) {
-            return response($winner->player, 200);
+            return response($rankings, 200);
         }
 
         return back();

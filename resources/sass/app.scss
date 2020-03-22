@@ -1,18 +1,19 @@
+@import "variables";
+@import "~bulmaswatch/solar/bulmaswatch";
+@import "~bulmaswatch/solar/overrides";
+@import "~open-iconic/font/css/open-iconic";
 
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+#navigation {
+    .logo {
+        width: 8em;
 
-// Variables
-@import 'variables';
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import 'bootswatch';
-
-// Open Iconic
-@import '~open-iconic/font/css/open-iconic-bootstrap';
-
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        img {
+            margin-right: 10px;
+        }
+    }
 }
+
+.hero.has-table .hero-body {
+    display: block;
+}
+

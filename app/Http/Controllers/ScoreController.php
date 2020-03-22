@@ -6,7 +6,13 @@ use App\Corporation;
 use App\Game;
 use App\Player;
 use App\Score;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class ScoreController extends Controller
 {
@@ -16,7 +22,7 @@ class ScoreController extends Controller
      * @param Request $request
      * @param Game|null $game
      *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function create(Request $request, Game $game = null)
     {
@@ -35,11 +41,11 @@ class ScoreController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @param Game $game
      *
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @return RedirectResponse|Redirector
+     * @throws ValidationException
      */
     public function store(Request $request, Game $game)
     {
@@ -89,6 +95,13 @@ class ScoreController extends Controller
         return redirect(route('games.show', compact('game')));
     }
 
+    /**
+     * Creates a new player
+     *
+     * @param Request $request
+     * @return Player
+     * @throws ValidationException
+     */
     private function createNewPlayer(Request $request): Player
     {
         $this->validate($request, [

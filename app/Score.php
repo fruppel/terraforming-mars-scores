@@ -25,9 +25,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\GamePlayer whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Score extends Model
+class
+Score extends Model
 {
     protected $fillable = ['game_id', 'player_id', 'corporation_id', 'tr', 'awards', 'milestones', 'gameboard', 'cards', 'megacredits', 'result'];
+
+    protected $with = ['player'];
 
     public function player()
     {

@@ -1,15 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h5>Neues Spiel</h5>
-        <hr class="border-primary mb-4">
+    @component('components.hero')
+        <h2 class="title is-2">Neues Spiel</h2>
 
-        @include('_errors')
-
-        <form method="POST" action="{{ route('games.store') }}">
+        <form method="POST" action="{{ route('games.store') }}" class="box">
             {{ csrf_field() }}
             @include('games/_form')
         </form>
-    </div>
+    @endcomponent
 @endsection

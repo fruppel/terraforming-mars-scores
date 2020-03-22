@@ -1,35 +1,44 @@
-<div class="form-group row">
-    <label for="date" class="col-sm-2 col-form-label">Datum</label>
-    <div class="col-sm-10">
-        <input type="datetime-local" id="date" name="date" class="form-control" value="{{ $game->date }}">
+<div class="field">
+    <label for="email" class="label">Datum</label>
+    <div class="control">
+        <input type="datetime-local" id="date" name="date" class="input" value="{{ $game->date }}">
     </div>
+    @component('components.error_field', ['fieldName' => 'date']) @endcomponent
 </div>
-<div class="form-group row">
-    <label for="map_id" class="col-sm-2 col-form-label">Karte</label>
-    <div class="col-sm-10">
-        <select name="map_id" id="map_id" class="custom-select">
-            @foreach ($maps as $map)
-            <option value="{{ $map->id }}" {{ (int) $game->map_id === $map->id ? 'selected' : '' }}>{{ $map->name }}</option>
-            @endforeach
-        </select>
-    </div>
-</div>
-<div class="form-group row">
-    <label class="col-sm-2 col-form-label">Erweiterungen</label>
-    <div class="col-sm-10">
-        <div class="custom-control custom-switch">
-            <input type="checkbox" name="corporate_area" id="corporate_area" class="custom-control-input" {{ $game->corporate_area ? 'checked' : '' }}>
-            <label class="custom-control-label" for="corporate_area">Zeitalter der Konzerne</label>
-        </div>
-        <div class="custom-control custom-switch">
-            <input type="checkbox" name="corporate_mini_extension" id="corporate_mini_extension" class="custom-control-input" {{ $game->corporate_mini_extension ? 'checked' : '' }}>
-            <label class="custom-control-label" for="corporate_mini_extension">Konzerne Mini-Erweiterung</label>
+
+<div class="field">
+    <label for="map_id" class="label">Karte</label>
+    <div class="control">
+        <div class="select is-fullwidth">
+            <select name="map_id" id="map_id">
+                @foreach ($maps as $map)
+                    <option value="{{ $map->id }}" {{ (int) $game->map_id === $map->id ? 'selected' : '' }}>{{ $map->name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
+    @component('components.error_field', ['fieldName' => 'map_id']) @endcomponent
 </div>
-<div class="form-group row mt-4">
-    <div class="offset-sm-2 col-sm-10">
-        <button type="submit" class="btn btn-primary mr-1">Speichern</button>
-        <a href="{{ route('games.index') }}" class="btn btn-secondary">Abbrechen</a>
+
+<div class="field">
+    <label class="label">Erweiterungen</label>
+    <div class="control">
+        <label class="checkbox" for="corporate_area">
+            <input type="checkbox" name="corporate_area" id="corporate_area" class="checkbox" {{ $game->corporate_area ? 'checked' : '' }}>
+            Zeitalter der Konzerne
+        </label>
+    </div>
+    <div class="control">
+        <label class="checkbox" for="corporate_area">
+            <input type="checkbox" name="corporate_mini_extension" id="corporate_mini_extension" class="checkbox" {{ $game->corporate_mini_extension ? 'checked' : '' }}>
+            Konzerne Mini-Erweiterung
+        </label>
+    </div>
+</div>
+
+<div class="field">
+    <div class="buttons">
+        <button type="submit" class="button is-primary">Speichern</button>
+        <a href="{{ route('games.index') }}" class="button is-danger is-outlined">Abbrechen</a>
     </div>
 </div>

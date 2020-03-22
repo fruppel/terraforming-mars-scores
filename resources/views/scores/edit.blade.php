@@ -1,70 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h5>{{ $score->player->display_name . ' bearbeiten'  }}</h5>
-        <hr class="border-primary mb-4">
+    @component('components.hero')
+        <h2 class="title is-2">{{ $score->player->display_name . ' bearbeiten'  }}</h2>
 
-        <form method="POST" action="{{ route('scores.update', compact('game', 'score')) }}">
+        <form method="POST" action="{{ route('scores.update', compact('game', 'score')) }}" class="box">
             @method('PATCH')
             @csrf
+            <div class="field">
+                <label for="corporation_id" class="label">Konzern</label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select name="corporation_id" id="corporation_id">
+                            <option value="1" {{ (int) $score->corporation_id === 1 ? 'selected' : '' }}>Anfänger-Konzern</option>
+                            @foreach ($corporations as $corporation)
+                                <option value="{{ $corporation->id }}" {{ (int) $score->corporation_id === $corporation->id ? 'selected' : '' }}>{{ $corporation->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                @component('components.error_field', ['fieldName' => 'corporation_id']) @endcomponent
+            </div>
+            @input(['name' => 'tr', 'label' => 'TW', 'value' => $score->tr, 'type' => 'number'])
+            @input(['name' => 'awards', 'label' => 'Auszeichnungen', 'value' => $score->awards, 'type' => 'number'])
+            @input(['name' => 'milestones', 'label' => 'Meilensteine', 'value' => $score->milestones, 'type' => 'number'])
+            @input(['name' => 'gameboard', 'label' => 'Spielbrett', 'value' => $score->gameboard, 'type' => 'number'])
+            @input(['name' => 'cards', 'label' => 'Karten', 'value' => $score->cards, 'type' => 'number'])
+            @input(['name' => 'megacredits', 'label' => 'Megacredits', 'value' => $score->megacredits, 'type' => 'number'])
 
-            <div class="form-group row">
-                <label for="corporation_id" class="col-sm-2 col-form-label">Konzern</label>
-                <div class="col-sm-10">
-                    <select id="corporation_id" name="corporation_id" class="form-control">
-                        <option value="1" {{ (int) $score->corporation_id === 1 ? 'selected' : '' }}>Anfänger-Konzern</option>
-                        @foreach ($corporations as $corporation)
-                            <option value="{{ $corporation->id }}" {{ (int) $score->corporation_id === $corporation->id ? 'selected' : '' }}>{{ $corporation->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="tr" class="col-sm-2 col-form-label">TW</label>
-                <div class="col-sm-10">
-                    <input type="number" name="tr" id="tr" class="form-control" value="{{ $score->tr }}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="awards" class="col-sm-2 col-form-label">Auszeichnungen</label>
-                <div class="col-sm-10">
-                    <input type="number" name="awards" id="awards" class="form-control" value="{{ $score->awards }}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="milestones" class="col-sm-2 col-form-label">Meilensteine</label>
-                <div class="col-sm-10">
-                    <input type="number" name="milestones" id="milestones" class="form-control" value="{{ $score->milestones }}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="gameboard" class="col-sm-2 col-form-label">Spielbrett</label>
-                <div class="col-sm-10">
-                    <input type="number" name="gameboard" id="gameboard" class="form-control" value="{{ $score->gameboard }}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="cards" class="col-sm-2 col-form-label">Karten</label>
-                <div class="col-sm-10">
-                    <input type="number" name="cards" id="cards" class="form-control" value="{{ $score->cards }}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="megacredits" class="col-sm-2 col-form-label">MegaCredits</label>
-                <div class="col-sm-10">
-                    <input type="number" name="megacredits" id="megacredits" class="form-control" value="{{ $score->megacredits }}">
-                </div>
-            </div>
-
-
-
-            <div class="form-group row mt-4">
-                <div class="offset-sm-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary mr-1">Speichern</button>
-                    <a href="{{ route('games.show', compact('game')) }}" class="btn btn-secondary">Abbrechen</a>
+            <div class="field">
+                <div class="buttons">
+                    <button type="submit" class="button is-primary">Speichern</button>
+                    <a href="{{ route('games.show', compact('game')) }}" class="button is-danger is-outlined">Abbrechen</a>
                 </div>
             </div>
         </form>
-    </div>
+
+    @endcomponent
 @endsection

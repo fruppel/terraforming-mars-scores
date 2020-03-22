@@ -1,62 +1,93 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h5>Spiel #{{ $game->id }}</h5>
-        <small>{{ $game->germanDate }} | {{ $game->map->name }}</small>
-        <hr class="border-primary mb-4">
+    <section class="section">
+        <div class="container">
+            <h2 class="title is-2">
+                Spiel #{{ $game->id }}
+            </h2>
+            <h3 class="subtitle is-3">
+                {{ $game->germanDate }} | {{ $game->map->name }}
+            </h3>
 
-        <div class="table-responsive">
-            <table class="table">
-                <tr>
-                    <th class="border-top-0">Name</th>
-                    <th class="border-top-0">Konzern</th>
-                    <th class="border-top-0">TW</th>
-                    <th class="border-top-0">Auszeichnungen</th>
-                    <th class="border-top-0">Meilensteine</th>
-                    <th class="border-top-0">Spielbrett</th>
-                    <th class="border-top-0">Karten</th>
-                    <th class="border-top-0 text-center"><u>Ergebnis</u></th>
-                    <th class="border-top-0 text-center">M€</th>
-                    <th class="border-top-0 text-right">Aktionen</th>
-                </tr>
-                @foreach ($scores as $score)
-                    <tr {{ $game->winner_player_id === $score->player->id ? 'class=table-light' : '' }}>
-                        <td>{{ $score->player->display_name }}</td>
-                        <td>{{ $score->corporation->name }}</td>
-                        <td>{{ $score->tr }}</td>
-                        <td>{{ $score->awards }}</td>
-                        <td>{{ $score->milestones }}</td>
-                        <td>{{ $score->gameboard }}</td>
-                        <td>{{ $score->cards }}</td>
-                        <td class="text-right">{{ $score->result }}</td>
-                        <td class="text-right">{{ $score->megacredits }}</td>
-                        <td class="text-right">
-                            <a class="btn btn-secondary btn-sm" href="{{ route('scores.edit', compact('game', 'score')) }}"><i class="oi oi-pencil"></i></a>
-                        </td>
+            <div class="table-container">
+                <table class="table is-striped is-narrow-mobile is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Konzern</th>
+                        <th>TW</th>
+                        <th>Auszeichnungen</th>
+                        <th>Meilensteine</th>
+                        <th>Spielbrett</th>
+                        <th>Karten</th>
+                        <th class="has-text-centered"><u>Ergebnis</u></th>
+                        <th class="has-text-centered">M€</th>
+                        <th class="has-text-right">Aktionen</th>
                     </tr>
-                @endforeach
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                    @foreach ($scores as $score)
+                        <tr {{ $game->winner_player_id === $score->player->id ? 'class=table-light' : '' }}>
+                            <td>{{ $score->player->display_name }}</td>
+                            <td>{{ $score->corporation->name }}</td>
+                            <td>{{ $score->tr }}</td>
+                            <td>{{ $score->awards }}</td>
+                            <td>{{ $score->milestones }}</td>
+                            <td>{{ $score->gameboard }}</td>
+                            <td>{{ $score->cards }}</td>
+                            <td class="has-text-right">{{ $score->result }}</td>
+                            <td class="has-text-right">{{ $score->megacredits }}</td>
+                            <td class="has-text-right">
+                                <div class="buttons is-right">
+                                    <a class="button is-small is-outlined" href="{{ route('scores.edit', compact('game', 'score')) }}">
+                                        <span class="oi" data-glyph="pencil"></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="10">
 
-        <div class="row">
-            <div class="col-sm-4 mt-3">
-                <form method="GET" action="{{ route('scores.create', $game) }}">
-                    @csrf
-                    <select name="player_id" class="custom-select" onchange="this.form.submit()">
-                        <option value="" disabled selected>Spieler hinzufügen</option>
-                        <option value="0">Neuer Spieler</option>
-                        @foreach ($players as $player)
-                            <option value="{{ $player->id }}">{{ $player->display_name }}</option>
-                        @endforeach
-                    </select>
-                </form>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
-            <div class="col-sm-4 ml-sm-auto mt-3 text-right">
-                <calculate-button href="{{ route('games.calculate', compact('game')) }}">Berechnen</calculate-button>
+
+            <div class="box">
+                <div class="columns is-mobile">
+                    <div class="column">
+                        <form method="GET" action="{{ route('scores.create', $game) }}">
+                            @csrf
+                            <div class="field is-small">
+                                <label class="label is-hidden" for="player_id">Spieler hinuzfügen:</label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select name="player_id" id="player_id" onchange="this.form.submit()">
+                                            <option value="" disabled selected>Spieler hinzufügen</option>
+                                            <option value="0">Neuer Spieler</option>
+                                            @foreach ($players as $player)
+                                                <option value="{{ $player->id }}">{{ $player->display_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="column has-text-right">
+                        <calculate-button href="{{ route('games.calculate', compact('game')) }}">
+                            <span class="oi" data-glyph="calculator"></span>
+                        </calculate-button>
+                    </div>
+                </div>
             </div>
+
+
         </div>
-
-
-    </div>
+    </section>
 @endsection

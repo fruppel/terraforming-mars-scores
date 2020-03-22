@@ -1,16 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h5>Spiel bearbeiten</h5>
-        <hr class="border-primary mb-4">
+    @component('components.hero')
+        <h2 class="title is-2">Spiel bearbeiten</h2>
 
-        @include('_errors')
-
-        <form method="POST" action="{{ route('games.update', compact('game')) }}">
+        <form method="POST" action="{{ route('games.update', compact('game')) }}" class="box">
+            @include('_errors')
             @method('PATCH')
             {{ csrf_field() }}
             @include('games/_form')
         </form>
-    </div>
+    @endcomponent
 @endsection
